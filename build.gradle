@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.github.johnrengelman.shadow' version '7.1.1' // 使用最新版本
+}
+
+group = 'com.angelalign'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+
+shadowJar {
+	archiveBaseName.set('user-storate') // 设置 JAR 文件的基本名称
+	archiveClassifier.set('all') // 设置 JAR 文件的后缀
+	archiveVersion.set('1.0.0') // 设置版本号
+	mergeServiceFiles() // 合并服务文件，例如 META-INF/services
+	// 你还可以配置其他参数，比如 manifest 文件等
+//	relocate 'META-INF/services/', 'META-INF/services/'
+
+}
+
+tasks.build {
+	dependsOn shadowJar
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly  'org.keycloak:keycloak-core:25.0.2'
+	compileOnly  'org.keycloak:keycloak-server-spi:25.0.2'
+	compileOnly  'org.keycloak:keycloak-model-jpa:25.0.2'
+	compileOnly  'org.keycloak:keycloak-services:25.0.2'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'mysql:mysql-connector-java:8.0.26'
+	testRuntimeOnly 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'junit:junit:4.13.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}

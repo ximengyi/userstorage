@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keycloak.userstorage.user_storage_iortho.dao.RbacAccountDao">
+
+    <insert id="addRbacAccount" parameterType="com.angelalign.userstorage.entity.UserEntity" useGeneratedKeys="true" keyProperty="accountId">
+        INSERT INTO
+        opm_rbac_account
+        (
+        userId,
+        username,
+        password,
+        strength,
+        isDelete,
+        createBy,
+        createTime,
+        modifyBy,
+        modifyTime,
+        pwdTime
+        )
+        VALUES
+            (
+            #{userId},
+            #{username},
+            #{password},
+            #{strength},
+            #{isDelete},
+            #{createBy},
+            #{createTime},
+            #{modifyBy},
+            #{modifyTime},
+            #{pwdTime}
+        )
+    </insert>
+
+
+    <select id="getUserByUsername" resultType="com.angelalign.userstorage.entity.UserEntity">
+        SELECT
+          accountId,
+          userId,
+          username,
+          password,
+          strength,
+          isDelete,
+          createBy,
+          createTime,
+          modifyBy,
+          modifyTime
+        FROM
+          opm_rbac_account
+        WHERE
+          isDelete = 0
+        AND
+          username = #{0}
+        LIMIT 0,1
+    </select>
+
+    <select id="getUserById" resultType="com.angelalign.userstorage.entity.UserEntity">
+        SELECT
+            accountId,
+            userId,
+            username,
+            password,
+            strength,
+            isDelete,
+            createBy,
+            createTime,
+            modifyBy,
+            modifyTime
+        FROM
+            opm_rbac_account
+        WHERE
+            isDelete = 0
+          AND
+            accountId = #{accountId}
+            LIMIT 0,1
+    </select>
+
+    <select id="getUserCount" resultType="com.angelalign.userstorage.entity.UserEntity">
+        SELECT
+            COUNT(*)
+        FROM
+            opm_rbac_account
+        WHERE
+            isDelete = 0
+
+    </select>
+
+    <select id="getAllUsers" resultType="com.angelalign.userstorage.entity.UserEntity">
+        SELECT
+            accountId,
+            userId,
+            username,
+            password,
+            strength,
+            isDelete,
+            createBy,
+            createTime,
+            modifyBy,
+            modifyTime
+        FROM
+            opm_rbac_account
+        WHERE
+            isDelete = 0
+
+    </select>
+
+
+    <select id="searchForUser" resultType="com.angelalign.userstorage.entity.UserEntity">
+        SELECT  accountId,
+                userId,
+                username,
+                password,
+                strength,
+                isDelete,
+                createBy,
+                createTime,
+                modifyBy,
+                modifyTime
+        FROM opm_rbac_account
+        WHERE username
+        LIKE
+         #{0}
+        ORDER BY username
+
+    </select>
+
+</mapper>
