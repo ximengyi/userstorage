@@ -17,13 +17,12 @@
 package com.angelalign.userstorage.user;
 
 
+import com.angelalign.userstorage.config.CustomConfigLoader;
 import com.angelalign.userstorage.dao.RbacAccountDao;
 import com.angelalign.userstorage.dao.UserDao;
-import com.angelalign.userstorage.provider.CustomDataSourceProvider;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.Resource;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jboss.logging.Logger;
 import org.keycloak.component.ComponentModel;
@@ -67,12 +66,9 @@ public class MyUserStorageProviderFactory implements UserStorageProviderFactory<
 
        try{
 
-           if(sqlSessionFactory == null){
-
+           if(dataSource == null){
                setDataSource();
                logger.info("setDataSource done");
-               sqlSessionFactory();
-               logger.info("sqlSessionFactory done ");
            }
 
 //           SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -127,11 +123,18 @@ public class MyUserStorageProviderFactory implements UserStorageProviderFactory<
 
     public void setDataSource() {
 
-        String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/iortho?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT";
-        String username = "rootadmin";
-        String password = "rootmeng";
+//        String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/iortho?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT";
+//        String username = "rootadmin";
+//        String password = "rootmeng";
         String driverClassName = "com.mysql.cj.jdbc.Driver"; // 这里假设您使用的是MySQL
         // 配置HikariCP连接池
+        String jdbcUrl =  CustomConfigLoader.getPropertyValue("datasource");
+        String username = CustomConfigLoader.getPropertyValue("username");
+        String password = CustomConfigLoader.getPropertyValue("password");
+
+        logger.info("<<<<<< jdbcUrl:"+jdbcUrl);
+        logger.info("<<<<<< username:"+username);
+        logger.info("<<<<<< password:"+password);
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(jdbcUrl);
         hikariConfig.setUsername(username);
