@@ -37,6 +37,17 @@ public class UserEntity {
     private String modifyBy;
     private String modifyTime;
     private String pwdTime;
+    private String site;
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+
 
     public int getAccountId() {
         return accountId;
@@ -139,6 +150,7 @@ public class UserEntity {
                 ", createTime='" + createTime + '\'' +
                 ", modifyBy='" + modifyBy + '\'' +
                 ", modifyTime='" + modifyTime + '\'' +
+                ", site='" + site + '\'' +
                 ", pwdTime='" + pwdTime + '\'' +
                 '}';
     }

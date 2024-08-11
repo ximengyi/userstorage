@@ -18,14 +18,6 @@ public class CustomConfigLoader {
 
         try {
 
-//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//            ResourceBundle resourceBundle = ResourceBundle.getBundle("application", Locale.getDefault(), classLoader);
-//            Enumeration<String> keys = resourceBundle.getKeys();
-//            while (keys.hasMoreElements()) {
-//                String key = keys.nextElement();
-//                properties.setProperty(key, resourceBundle.getString(key));
-//            }
-
             String absolutePath = "D:\\keycloak\\keycloak-25.0.2\\providers\\application.properties";
             FileInputStream inputStream = new FileInputStream(absolutePath);
             properties.load(inputStream);

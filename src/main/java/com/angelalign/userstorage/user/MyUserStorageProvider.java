@@ -98,7 +98,7 @@ public class MyUserStorageProvider implements UserStorageProvider,
     public UserModel getUserById(RealmModel realm, String id) {
         logger.info("getUserById: " + id);
         String persistenceId = StorageId.externalId(id);
-        UserEntity entity = rbacAccountDao.getUserById(Integer.parseInt(id));
+        UserEntity entity = rbacAccountDao.getUserById(Integer.parseInt(persistenceId));
         if (entity == null) {
             logger.info("could not find user by id: " + id);
             return null;

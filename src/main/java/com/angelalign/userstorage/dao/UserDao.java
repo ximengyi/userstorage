@@ -13,9 +13,11 @@ import java.util.List;
 public class UserDao {
 
     private final DataSource dataSource;
+    private  String site;
 
-    public UserDao(DataSource dataSource) {
+    public UserDao(DataSource dataSource,String site) {
         this.dataSource = dataSource;
+        this.site = site;
     }
 
     // Method to get a user by account ID
@@ -126,6 +128,7 @@ public class UserDao {
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password"));
         user.setUserId(rs.getInt("userId"));
+        user.setSite(site);
         return user;
 
     }

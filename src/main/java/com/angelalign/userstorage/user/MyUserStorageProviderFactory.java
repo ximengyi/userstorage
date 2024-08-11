@@ -83,7 +83,7 @@ public class MyUserStorageProviderFactory implements UserStorageProviderFactory<
 
            if(userDao ==null){
 
-               userDao = new UserDao(dataSource);
+               userDao = new UserDao(dataSource,"cn");
            }
 
 

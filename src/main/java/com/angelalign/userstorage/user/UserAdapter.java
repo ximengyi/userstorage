@@ -81,14 +81,22 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     @Override
     public void setSingleAttribute(String name, String value) {
 
-        super.setSingleAttribute(name, value);
+        if (name.equals("site")) {
+            entity.setSite(value);
+        } else {
+            super.setSingleAttribute(name, value);
+        }
 
     }
 
     @Override
     public void removeAttribute(String name) {
 
-        super.removeAttribute(name);
+        if (name.equals("site")) {
+            entity.setSite(null);
+        } else {
+            super.removeAttribute(name);
+        }
 
     }
 
@@ -96,6 +104,8 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     public void setAttribute(String name, List<String> values) {
         if (name.equals("username")) {
             entity.setUsername(values.get(0));
+        } else if (name.equals("site")) {
+             entity.setSite(values.get(0));
         } else {
             super.setAttribute(name, values);
         }
@@ -105,9 +115,13 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     public String getFirstAttribute(String name) {
         if (name.equals("username")) {
             return entity.getUsername();
+        } else if (name.equals("site")) {
+            return entity.getSite();
         } else {
             return super.getFirstAttribute(name);
         }
+
+
     }
 
     @Override
@@ -115,13 +129,26 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
         Map<String, List<String>> attrs = super.getAttributes();
         MultivaluedHashMap<String, String> all = new MultivaluedHashMap<>();
         all.putAll(attrs);
+        all.add("site",entity.getSite());
         return all;
     }
 
     @Override
     public Stream<String> getAttributeStream(String name) {
-
+        if (name.equals("site")) {
+            return Stream.of(entity.getSite());
+        } else {
             return super.getAttributeStream(name);
+        }
 
+    }
+
+    public void setSite(String site) {
+        entity.setSite(site);
+    }
+
+
+    public String getSite() {
+        return entity.getSite();
     }
 }
